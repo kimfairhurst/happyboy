@@ -10,7 +10,7 @@ map1["happyboyx"] = 50
 map1["happyboyy"] = 70
 
 local map2 = {}
-map2["goalx"] = 0
+map2["goalx"] = 170
 map2["goaly"] = 0
 map2["happyboyx"] = 100
 map2["happyboyy"] = 100
@@ -32,26 +32,28 @@ happyBoyChar = director:createSprite({x=chosen_map['happyboyx'], y = chosen_map[
 function collisions(event)
 	if event.phase == "began" then
 		happyBoyChar.physics:setLinearVelocity(0, 0)
-		print("FREEZE")
 	end
 end
 
 block1 = director:createSprite({x=100,y=320,source="block.png"})
-physics:addNode(block1, {type = 'static', friction = 10000})
+physics:addNode(block1, {type = 'static'})
 block1:addEventListener("collision", collisions)
 block2 = director:createSprite({x=240,y=240,source="block.png"})
-physics:addNode(block2, {type = 'static', friction = 10000})
+physics:addNode(block2, {type = 'static'})
 block2:addEventListener("collision", collisions)
 
 currentLevelLabel = director:createLabel({x=50, y=director.displayHeight-50, text = "Current Level: " .. current_level, color=color.black})
 
 function enterGoal(event)
 	if event.phase == "began" then
+		happyBoyChar.physics:setLinearVelocity(0, 0)		
 		current_level = current_level + 1
 		currentLevelLabel.text = "Current Level: " .. current_level
+		winScreen = director:createLabel({x=70, y=350, text = "YOU WIN!!", color=color.black})		
+		-- if new high score ... 
+		-- TODO: add congratulations/option screen to move onto next level
 	end
 end
-
 physics:setGravity(0, 0)
 physics:setTimeScale(0.1)
 
@@ -90,7 +92,6 @@ function moveDown(event)
 	end
 end
 
-ballTimer = system:addTimer(dropBall, 2, 0)
 happyBoyTimer = system:addTimer(checkHappyBoyPosition, 0.5, 0)
  
 function touch(event)
@@ -105,5 +106,3 @@ up:addEventListener("touch", moveUp)
 right:addEventListener("touch", moveRight)
 left:addEventListener("touch", moveLeft)
 down:addEventListener("touch", moveDown)
-
-system:addEventListener("collision", freeze)
