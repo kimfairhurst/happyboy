@@ -15,8 +15,16 @@ map2["goaly"] = 0
 map2["happyboyx"] = 100
 map2["happyboyy"] = 100
 
+local map3 = {}
+map3["goalx"] = 140
+map3["goaly"] = 10
+map3["happyboyx"] = 80
+map3["happyboyy"] = 90
+
 maps[1] = map1
 maps[2] = map2
+maps[3] = map3
+
 
 chosen_map = maps[current_level]
 
